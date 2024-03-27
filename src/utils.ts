@@ -41,3 +41,19 @@ export function fetchAccount(address: string): Account | null {
     }
     return account;
 }
+
+
+export function fetchBalance(
+    tokenAddress: Address,
+    accountAddress: Address
+): BigDecimal {
+    let contract = Contract.bind(tokenAddress);
+    let amount = BigDecimal.fromString("0");
+    let tokenBalance = contract.try_balanceOf(accountAddress);
+
+    if (!tokenBalance.reverted) {
+        amount = tokenBalance.value.toBigDecimal();
+    }
+
+    return amount;
+}
