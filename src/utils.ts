@@ -32,3 +32,12 @@ export function fetchTokenDetails(event: ethereum.Event): Token | null {
     }
     return token;
 }
+
+export function fetchAccount(address: string): Account | null {
+    let account = Account.load(address);
+    if (!account) {
+        account = new Account(address);
+        account.save();
+    }
+    return account;
+}
